@@ -1,0 +1,49 @@
+package layout
+
+templ Base() {
+    <html>
+        @head("Page Title")
+        <body class="bg-gray-900">
+            @navbar()
+            {children...}
+        </body>
+    </html>
+}
+
+templ head(title string) {
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>{title}</title>
+        <script src="https://cdn.tailwindcss.com"/>
+        <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"/>
+    </head>
+}
+
+templ navbar() {
+  <nav class="bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex-shrink-0">
+          <a href="" class="text-white font-bold text-xl">Goodlett Tech</a>
+        </div>
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-4">
+            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                Home
+            </a>
+            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                About
+            </a>
+            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                Services
+            </a>
+            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                Contact
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+}
