@@ -1,9 +1,9 @@
 package layout
 
-templ Base() {
+templ Base(title string) {
     <html>
-        @head("Page Title")
-        <body class="bg-gray-900">
+        @head(title)
+        <body class="bg-zinc-900">
             @navbar()
             {children...}
         </body>
@@ -16,22 +16,21 @@ templ head(title string) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>{title}</title>
         <script src="https://cdn.tailwindcss.com"/>
-        <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"/>
+        <script src="https://unpkg.com/htmx.org@1.9.10" 
+                integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" 
+                crossorigin="anonymous"/>
     </head>
 }
 
 templ navbar() {
-  <nav class="bg-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <nav class="bg-zinc-950">
+    <div class="max-w-7x1 mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <div class="flex-shrink-0">
+        <div class="flex-shrink-0" hx-boost="true">
           <a href="" class="text-white font-bold text-xl">Goodlett Tech</a>
         </div>
         <div class="hidden md:block">
           <div class="ml-10 flex items-baseline space-x-4">
-            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                Home
-            </a>
             <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                 About
             </a>

@@ -2,7 +2,7 @@ package routes
 
 import (
 	test "server/server/internal/routes/api"
-	views "server/server/internal/routes/pages"
+	views "server/server/internal/routes/views"
 
 	"github.com/labstack/echo/v4"
 )
