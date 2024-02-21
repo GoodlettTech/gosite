@@ -13,7 +13,7 @@ func main() {
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.Logger())
 
-	routes.RegisterRoutes(e)
+	routes.InitRoutes(e)
 
 	e.Logger.Fatal(
 		e.Start(":3000"))

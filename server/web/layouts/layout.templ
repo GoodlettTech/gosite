@@ -3,9 +3,13 @@ package layout
 templ Base(title string) {
     <html>
         @head(title)
-        <body class="bg-zinc-900">
+        <body class="bg-zinc-900 text-zinc-200" hx-push-url="true" hx-boosted="true">
             @navbar()
-            {children...}
+            <div class="container">
+              <div class="flex justify-center">
+                {children...}
+              </div>
+            </div>
         </body>
     </html>
 }
@@ -25,22 +29,9 @@ templ head(title string) {
 templ navbar() {
   <nav class="bg-zinc-950">
     <div class="max-w-7x1 mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
+      <div class="flex items-center justify-center h-16">
         <div class="flex-shrink-0" hx-boost="true">
           <a href="" class="text-white font-bold text-xl">Goodlett Tech</a>
-        </div>
-        <div class="hidden md:block">
-          <div class="ml-10 flex items-baseline space-x-4">
-            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                About
-            </a>
-            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                Services
-            </a>
-            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                Contact
-            </a>
-          </div>
         </div>
       </div>
     </div>

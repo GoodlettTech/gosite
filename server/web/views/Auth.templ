@@ -1,0 +1,16 @@
+package Views
+
+import "server/server/web/layouts"
+import "server/server/web/partials"
+
+templ Login() {
+	@layout.Base("Login") {
+		@partials.LoginForm()
+	}
+}
+
+templ CreateAccount() {
+	@layout.Base("Create Account") {
+		@partials.CreateAccountForm()
+	}
+}
