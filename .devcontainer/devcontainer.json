@@ -14,15 +14,16 @@
 			"extensions": [
 				"a-h.templ",
 				"yzhang.markdown-all-in-one"
-			]
-		}
-	},
-	"settings": {
-		"files.exclude": {
-			"**/tmp": true,
-			"**/*_templ.go": true
+			],
+			"settings": {
+				"files.exclude": {
+					"**/tmp": true,
+					"**/*_templ.go": true
+				}
+			}
 		}
 	}
+	
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
