@@ -1,7 +1,7 @@
 package home
 
 import (
-	"server/server/internal/middleware"
+	AuthMiddleware "server/server/internal/middleware/auth"
 	Views "server/server/web/views"
 
 	"github.com/labstack/echo/v4"
@@ -10,5 +10,5 @@ import (
 func RegisterPages(router *echo.Group) {
 	router.GET("", func(c echo.Context) error {
 		return Views.Home().Render(c.Request().Context(), c.Response().Writer)
-	}, middleware.IsAuthenticated)
+	}, AuthMiddleware.IsAuthenticated)
 }

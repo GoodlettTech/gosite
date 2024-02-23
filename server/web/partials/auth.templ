@@ -11,7 +11,7 @@ templ form(title string, id string, postUrl string) {
 
 templ formField(label string, id string, placeholder string, inputType string) {
     <div class="flex flex-row my-2">
-        <label for={label} class="mr-auto">{label}</label>
+        <label for={id} class="mr-auto">{label}</label>
         <input
             class="bg-zinc-700 ml-4 px-1 round"
             type={inputType}
