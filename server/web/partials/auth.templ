@@ -1,5 +1,7 @@
 package partials
 
+import "fmt"
+
 templ form(title string, id string, postUrl string) {
     <form id={id} hx-post={postUrl} hx-target="body" hx-swap="outerHTML" hx-push-url="true" class="card card-rounded flex items-center justify-center bg-zinc-800 rounded-lg p-6 mt-6">
         <div class="flex flex-col text-zinc-200">
@@ -21,8 +23,16 @@ templ formField(label string, id string, placeholder string, inputType string) {
     </div>
 }
 
-templ LoginForm() {
-    @form("Login", "LoginForm", "/auth/login") {
+func getFullUrl(baseUrl string, redirectUrl string) string {
+    if redirectUrl != "" {
+        return fmt.Sprintf("%s?redirect=%s", baseUrl, redirectUrl)
+    } else {
+        return baseUrl
+    }
+}
+
+templ LoginForm(redirectUrl string) {
+    @form("Login", "LoginForm", getFullUrl("/auth/login", redirectUrl)) {
         @formField("Username", "username", "username", "text")
         @formField("Password", "password", "password", "password")
 
@@ -32,7 +42,7 @@ templ LoginForm() {
             </div>
             <div class="p-6">
                 <button 
-                    hx-get="/auth/createaccount" 
+                    hx-get={getFullUrl("/auth/createaccount", redirectUrl)} 
                     hx-push-url="true" 
                     hx-swap="outerHTML"
                     hx-target="#LoginForm" 
@@ -45,8 +55,8 @@ templ LoginForm() {
     }
 }
 
-templ CreateAccountForm() {
-    @form("Create Account", "CreateAccountForm", "/auth/createaccount") {
+templ CreateAccountForm(redirectUrl string) {
+    @form("Create Account", "CreateAccountForm", getFullUrl("/auth/createaccount", redirectUrl)) {
         @formField("Email", "email", "Email", "email")
         @formField("Username", "username", "Username", "text")
         @formField("Password", "password", "Password", "password")
@@ -55,7 +65,7 @@ templ CreateAccountForm() {
         <div class="flex flex-row justify-center">
             <div class="p-6">
                 <button 
-                    hx-get="/auth/login" 
+                    hx-get={getFullUrl("/auth/login", redirectUrl)}
                     hx-push-url="true" 
                     hx-swap="outerHTML"
                     hx-target="#CreateAccountForm" 

@@ -3,14 +3,14 @@ package Views
 import "server/server/web/layouts"
 import "server/server/web/partials"
 
-templ Login() {
+templ Login(redirectUrl string) {
 	@layout.Base("Login") {
-		@partials.LoginForm()
+		@partials.LoginForm(redirectUrl)
 	}
 }
 
-templ CreateAccount() {
+templ CreateAccount(redirectUrl string) {
 	@layout.Base("Create Account") {
-		@partials.CreateAccountForm()
+		@partials.CreateAccountForm(redirectUrl)
 	}
 }

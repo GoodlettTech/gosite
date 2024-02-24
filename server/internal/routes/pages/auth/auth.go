@@ -2,7 +2,6 @@ package auth
 
 import (
 	"errors"
-	"fmt"
 	"net/url"
 	AuthMiddleware "server/server/internal/middleware/auth"
 	UserMiddleware "server/server/internal/middleware/user"
@@ -19,21 +18,15 @@ import (
 func RegisterPages(router *echo.Group) {
 	router.GET("/login", func(c echo.Context) error {
 		hx := strings.ToLower(c.Request().Header.Get("HX-Request"))
-
-		redirect := c.QueryParams().Get("redirect")
-		url, err := url.QueryUnescape(redirect)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(url)
-
+		redirect := url.QueryEscape(c.QueryParams().Get("redirect"))
 		if hx == "true" {
-			return partials.LoginForm().Render(c.Request().Context(), c.Response().Writer)
+			return partials.LoginForm(redirect).Render(c.Request().Context(), c.Response().Writer)
 		} else {
-			return Views.Login().Render(c.Request().Context(), c.Response().Writer)
+			return Views.Login(redirect).Render(c.Request().Context(), c.Response().Writer)
 		}
 	}, AuthMiddleware.IsNotAuthenticated)
 
+	//https://www.reddit.com/r/htmx/comments/11ifjid/error_handling_the_htmx_way/
 	router.POST("/login", func(c echo.Context) error {
 		creds := c.Get("credentials").(*UserModel.Credentials)
 		userId, err := UserService.VerifyUser(creds)
@@ -47,16 +40,26 @@ func RegisterPages(router *echo.Group) {
 		cookie := AuthService.CreateCookie(userId)
 		c.SetCookie(&cookie)
 
-		return c.Redirect(303, "/")
+		redirect := c.QueryParam("redirect")
+		if redirect != "" {
+			redirectUrl, err := url.QueryUnescape(redirect)
+			if err != nil {
+				return err
+			}
+			return c.Redirect(303, redirectUrl)
+		} else {
+			return c.Redirect(303, "/")
+		}
+
 	}, UserMiddleware.TakesCredentials, AuthMiddleware.IsNotAuthenticated)
 
 	router.GET("/createaccount", func(c echo.Context) error {
 		hx := strings.ToLower(c.Request().Header.Get("HX-Request"))
-
+		redirect := url.QueryEscape(c.QueryParams().Get("redirect"))
 		if hx == "true" {
-			return partials.CreateAccountForm().Render(c.Request().Context(), c.Response().Writer)
+			return partials.CreateAccountForm(redirect).Render(c.Request().Context(), c.Response().Writer)
 		} else {
-			return Views.CreateAccount().Render(c.Request().Context(), c.Response().Writer)
+			return Views.CreateAccount(redirect).Render(c.Request().Context(), c.Response().Writer)
 		}
 	}, AuthMiddleware.IsNotAuthenticated)
 
@@ -72,7 +75,16 @@ func RegisterPages(router *echo.Group) {
 		cookie := AuthService.CreateCookie(user.Id)
 		c.SetCookie(&cookie)
 
-		return c.Redirect(303, "/")
+		redirect := c.QueryParam("redirect")
+		if redirect != "" {
+			redirectUrl, err := url.QueryUnescape(redirect)
+			if err != nil {
+				return err
+			}
+			return c.Redirect(303, redirectUrl)
+		} else {
+			return c.Redirect(303, "/")
+		}
 	}, AuthMiddleware.IsNotAuthenticated, UserMiddleware.TakesUser)
 
 	router.GET("/logout", func(c echo.Context) error {

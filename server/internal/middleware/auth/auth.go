@@ -14,10 +14,14 @@ func IsAuthenticated(next echo.HandlerFunc) echo.HandlerFunc {
 		cookie, err := c.Request().Cookie("Auth")
 
 		redirectUrl := "/auth/login"
-		//get current url and append it to the other urls as ?redirect=
-		currentUrl := c.Request().URL.String()
-		if currentUrl != "" {
-			redirectUrl = fmt.Sprintf("%s?redirect=%s", "/auth/login", url.QueryEscape(currentUrl))
+
+		//hx request coming from the page
+		if c.Request().Header.Get("HX-Request") == "true" {
+			hxCurrent := c.Request().Header.Get("HX-Current-URL")
+			redirectUrl = fmt.Sprintf("%s?redirect=%s", redirectUrl, url.QueryEscape(hxCurrent))
+		} else //browser request loading the page for the first time
+		if currentUrl := c.Request().URL.String(); currentUrl != "/auth/login" {
+			redirectUrl = fmt.Sprintf("%s?redirect=%s", redirectUrl, url.QueryEscape(currentUrl))
 		}
 
 		if err != nil || cookie != nil && cookie.MaxAge == -1 {
